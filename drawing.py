@@ -66,11 +66,29 @@ def symbol(x, y, r, ch, char_size, offset = 0):
             textAlign(CENTER, CENTER) #NOTE 1
             text(ch, x, y - r)
 
-#TODO: some way to add a tether from a floating child to some other point, possibly variable length...
-# Needs to be able to somehow evaluate x and y functions from a rotational value
-def tether(object1, object2):
-    #def tether(object1, x1, y1, object2, x2, y2)
-    line(object1.x, object1.y, object2.x(config.rotation * object2.rot_c), object2.y(config.rotation * object2.rot_c))
+
+def tether(x1, y1, x2, y2):
+    try:
+        _x1 = x1(frameCount)
+    except TypeError:
+        _x1 = x1
+    
+    try:
+        _y1 = y1(frameCount)
+    except TypeError:
+        _y1 = y1
+    
+    try:
+        _x2 = x2(frameCount)
+    except TypeError:
+        _x2 = x2
+    
+    try:
+        _y2 = y2(frameCount)
+    except TypeError:
+        _y2 = y2
+        
+    line(_x1, _y1, _x2, _y2)
     
 
 
@@ -78,7 +96,8 @@ def tether(object1, object2):
 
 """NOTES:
     
-    1: The vertical alignment is based on the value of textAscent(), which many fonts do not specify correctly. 
+    1: Per the documentation - 
+    The vertical alignment is based on the value of textAscent(), which many fonts do not specify correctly. 
     It may be necessary to use a hack and offset by a few pixels by hand so that the offset looks correct. 
     To do this as less of a hack, use some percentage of textAscent() or textDescent() so that the hack works even if you change the size of the font. 
 """

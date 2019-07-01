@@ -1,6 +1,5 @@
 looping = 0
-rotation = 0
-rotation_speed = 0.01
+base_frequency = 0.0033 * PI
 framerate = 60
 radius = 350
 stroke_weight = 3.0
