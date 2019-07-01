@@ -14,22 +14,24 @@ def setup():
     strokeJoin(ROUND)
     if config.font:
         textFont(createFont(config.font, config.font_clarity))
-    
-    noLoop()
+    if config.looping == 0:
+        noLoop()
     
     global elements
     elements = []
-    elements.append(Element(0, 0, 0, 0, ellipse, 1, 0, config.radius, config.radius))   
-    elements.append(Element(0, 0, 0, 0, drawing.double_ellipse, 0, 0, config.radius + 80, 20))
+    elements.append(Element(0, 0, 0, 0, 0, ellipse, 1, 0, config.radius, config.radius))   
+    elements.append(Element(0, 0, 0, 0, 0, drawing.double_ellipse, 0, 0, config.radius + 80, 20))
 
-    elements.append(Element(0, 0, config.base_frequency, 0, drawing.n_star_concave, 0, 0, 12, config.radius + 70, config.radius))
+    elements.append(Element(0, 0, 0, config.base_frequency, 0, drawing.n_star_concave, 0, 0, 12, config.radius + 70, config.radius))
     
-    moon = Element(x_function((config.base_frequency, config.radius / 2, 0)), y_function((config.base_frequency, config.radius / 5, 0)), config.base_frequency, PI, drawing.moon, 0, 0, config.radius / 4, 0.85)
+    moon = Element(x_function((config.base_frequency, config.radius / 1.5, 0)), y_function((config.base_frequency, config.radius / 3, 0)), 1, config.base_frequency, PI, drawing.moon, 0, 0, config.radius / 4, 0.85, True)
     elements.append(moon)
     
     
-    elements.append(Element(0, 0, 0, 0, drawing.tether, 0, 0, x_function((config.base_frequency, config.radius / 2, 0),(config.base_frequency, config.radius / 4, PI)), 
-                            y_function((config.base_frequency, config.radius / 5, 0), (config.base_frequency, config.radius / 4, PI))))
+    elements.append(Element(0, 0, 0, 0, 0, drawing.tether, 0, 0, x_function((config.base_frequency, config.radius / 1.5, 0),(config.base_frequency, config.radius / 4, PI)), 
+                            y_function((config.base_frequency, config.radius / 3, 0), (config.base_frequency, config.radius / 4, PI))))
+    
+    elements.sort(key = lambda element: element.z)
 
 
 def draw():

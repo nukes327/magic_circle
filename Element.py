@@ -1,22 +1,22 @@
 import config
 
-#def x_function(multiple, num_children, radius):
-#    return lambda x: cos(multiple * (TWO_PI / num_children) + x) * radius
 
 def x_function(*args):
+    """Expects 3-tuples for each argument in the form:
+    (frequency, radius, phase), radius is equivalent to amplitude here"""
     return lambda t: sum([arg[1]*cos(arg[0]*t + arg[2]) for arg in args])
 
-#def y_function(multiple, num_children, radius):
-#    return lambda y: sin(multiple * (TWO_PI / num_children) + y) * radius
-
 def y_function(*args):
+    """Expects 3-tuples for each argument in the form:
+    (frequency, radius, phase), radius is equivalent to amplitude here"""
     return lambda t: sum([arg[1]*sin(arg[0]*t + arg[2]) for arg in args])
 
 class Element:
-    def __init__(self, origin_x, origin_y, own_frequency, own_phase,
+    def __init__(self, origin_x, origin_y, z_level, own_frequency, own_phase,
                      draw_function, *args):
         self.x = origin_x
         self.y = origin_y
+        self.z = z_level
         self.frequency = own_frequency
         self.phase = own_phase
         self.draw_function = draw_function
